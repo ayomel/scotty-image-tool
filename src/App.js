@@ -3,10 +3,21 @@ import ReactFileReader from 'react-file-reader';
 import './App.css';
 
 const ImagePreViewON = (props) => {
- if (props.imagePreviewUrl) {
+  console.log(props);
+ if (props) {
    return (
      <div className="image-container">
-       <img src={props.imagePreviewUrl} />
+       {this.props
+         ?
+         <div>
+           {this.props.files.src.map((src) => {
+             return (
+               <img src={src} />
+             )
+           })}
+         </div>
+         :
+         null }
      </div>
    )
  }
@@ -21,15 +32,11 @@ class ImageUpload extends React.Component {
       imagePreviewUrl: ''
     };
   }
-
-  handleSubmit = (e) => {
-    e.preventDefault();
-    // TODO: do something with -> this.state.file
-    console.log('handle uploading-', this.state.file);
-  }
-
   scanFile(file) {
     var reader = new FileReader();
+    reader.onload = (e) => {
+      file.src = e.target.result;
+    }
     reader.readAsDataURL(file);
     console.log(file);
   }
@@ -43,7 +50,7 @@ class ImageUpload extends React.Component {
         this.setState({
           files: this.state.files.concat([files[key]]),
         });
-        scanFile(files[key]);
+        this.scanFile(files[key]);
       });
     }
   }
@@ -57,7 +64,7 @@ class ImageUpload extends React.Component {
             type="file"
             onChange={this.handleImageChange} multiple/>
         </form>
-        <ImagePreViewON imagePreviewUrl={this.state.imagePreviewUrl} />
+        <ImagePreViewON imagePreviewUrl={this.state.files} />
       </div>
     )
   }
