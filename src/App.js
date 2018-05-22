@@ -11,7 +11,6 @@ class ImageUpload extends Component {
     this.handleImageChange = this.handleImageChange.bind(this);
     this.dropHandler = this.dropHandler.bind(this);
     this.scanFile = this.scanFile.bind(this);
-    this.onLoadEndHandler = this.onLoadEndHandler.bind(this);
     this.state = {
       images: [],
       files: [],
@@ -21,10 +20,10 @@ class ImageUpload extends Component {
   scanFile(file) {
     let reader = new FileReader();
     reader.onload = (e) => {
+      this.onLoadEndHandler();
       let image = new Image();
       image.src = e.target.result;
       file.src = image.src;
-      this.onLoadEndHandler();
     }
     this.setState(prevState => ({
       images: [...prevState.images, file]
@@ -47,7 +46,9 @@ class ImageUpload extends Component {
   dropHandler = (e) => {
     e.preventDefault();
     let files = e.dataTransfer.files;
+    totalFiles = files.length;
     if (files && files[0]) {
+      console.log(files);
       Object.keys(files).map((key, index) => {
         this.setState(prevState => ({
           files: [...prevState.files, files[key]],
@@ -56,12 +57,12 @@ class ImageUpload extends Component {
       });
     }
   }
-  onLoadEndHandler() {
+  async onLoadEndHandler() {
     processedFiles++;
     if (processedFiles === totalFiles) {
-      this.setState({
-        isLoaded: true
-      })
+        this.setState({
+          isLoaded: await true
+        })
     }
   }
   render() {
