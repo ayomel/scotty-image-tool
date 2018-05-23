@@ -17,12 +17,16 @@ class ImageUpload extends Component {
       isLoaded: false,
     };
   }
-  scanFile(file) {
+  async scanFile(file) {
     let reader = new FileReader();
     reader.onload = (e) => {
-      this.onLoadEndHandler();
       let image = new Image();
       image.src = e.target.result;
+      image.onload = () => {
+        this.onLoadEndHandler();
+        file.height = image.height;
+        file.width = image.width
+      }
       file.src = image.src;
     }
     this.setState(prevState => ({
@@ -84,8 +88,9 @@ class ImageUpload extends Component {
               {this.state.images.map((image, i) => {
                 return (
                   <div key={i} className="image--files">
-                    <img key={image.name} alt={image.name} src={image.src} />
+                    <img id={image.name} key={image.name} alt={image.name} src={image.src} />
                     <h5>{image.name}</h5>
+                    <h5>{image.height} x {image.width}</h5>
                   </div>
                 )
               })}
