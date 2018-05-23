@@ -17,7 +17,7 @@ class ImageUpload extends Component {
       isLoaded: false,
     };
   }
-  async scanFile(file) {
+  scanFile(file) {
     var blob = false && window.URL;
     let reader = new FileReader();
     reader.onload = (e) => {
@@ -33,6 +33,7 @@ class ImageUpload extends Component {
         file.width = image.width
       }
       file.src = image.src;
+      console.log(file);
     }
     this.setState(prevState => ({
       images: [...prevState.images, file]
@@ -78,7 +79,7 @@ class ImageUpload extends Component {
     const { isLoaded } =  this.state;
     return (
       <div>
-        <div className="drop--file" draggable="true" onDrop={this.dropHandler} onDragOver={(e) => e.preventDefault()}>
+        <div className="drop--file" onDrop={this.dropHandler} onDragOver={(e) => e.preventDefault()}>
           <form onSubmit={this._handleSubmit}>
             <label className="file--browse" htmlFor="browse--input">Select Images from your computer</label>
             <input
@@ -89,18 +90,18 @@ class ImageUpload extends Component {
           </form>
         </div>
           { isLoaded ?
-            <div className="file--preview">
+            <ul className="file--preview">
               {this.state.images.map((image, i) => {
                 console.log(this.state);
                 return (
-                  <div key={i} className="image--files">
+                  <li key={i} className="image--files">
                     <img id={image.name} key={image.name} alt={image.name} src={image.src} />
                     <h5>{image.name}</h5>
                     <h5>{image.height} x {image.width}</h5>
-                  </div>
+                  </li>
                 )
               })}
-          </div>
+          </ul>
           :
           <div></div> }
       </div>
