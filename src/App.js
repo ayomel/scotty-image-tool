@@ -18,12 +18,17 @@ class ImageUpload extends Component {
     };
   }
   async scanFile(file) {
+    var blob = false && window.URL;
     let reader = new FileReader();
     reader.onload = (e) => {
+      if (blob) {
+        blob.revokeObjectURL(file.src);
+      }
       let image = new Image();
-      image.src = e.target.result;
+      image.src = blob ? image.createObjectURL(file) : e.target.result;
       image.onload = () => {
         this.onLoadEndHandler();
+        console.log(image.width + " " + image.height);
         file.height = image.height;
         file.width = image.width
       }
@@ -86,6 +91,7 @@ class ImageUpload extends Component {
           { isLoaded ?
             <div className="file--preview">
               {this.state.images.map((image, i) => {
+                console.log(this.state);
                 return (
                   <div key={i} className="image--files">
                     <img id={image.name} key={image.name} alt={image.name} src={image.src} />
