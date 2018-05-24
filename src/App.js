@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import './App.css';
+import Header from './Header.js';
 
 
 let processedFiles = 0;
@@ -78,8 +79,8 @@ class ImageUpload extends Component {
   render() {
     const { isLoaded } =  this.state;
     return (
-      <div>
-        <div className="drop--file" onDrop={this.dropHandler} onDragOver={(e) => e.preventDefault()}>
+      <div className="image--upload">
+        <div className="drop--file" draggable="true" onDrop={this.dropHandler} onDragOver={(e) => e.preventDefault()}>
           <form onSubmit={this._handleSubmit}>
             <label className="file--browse" htmlFor="browse--input">Select Images from your computer</label>
             <input
@@ -114,7 +115,7 @@ export default class App extends Component {
   render() {
     return (
       <main className="App">
-        <h3> React Image Upload </h3>
+        <Header />
         <ImageUpload />
       </main>
     )
