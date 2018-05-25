@@ -65,11 +65,61 @@ img {
 }
 
 .image--upload {
-  margin-top: 25px;
+  margin-top: 100px;
+}
+
+.App-logo {
+  float: left;
+  width: 126px;
+}
+
+header {
+  top: 0;
+  width: 100%;
+  z-index: 2;
+}
+
+header .header--wrap {
+  background: #131f24;
+  padding: 20px;
+  height: 60px;
+}
+
+header .header--main--wrap h1 {
+  color: #fff;
+  text-transform: uppercase;
+  font-size: 22px;
+  font-size: 1.375rem;
+  font-weight: 300;
+  float: right;
+}
+
+header .header--wrap nav {
+  padding-top: 20px;
+}
+
+header .header--wrap nav ul {
+  float: left;
+  padding-top: 15px;
+}
+
+header .header--wrap nav ul li {
+  padding-right: 40px;
+}
+
+a {
+  color: #fff;
+  float: left;
+  font-size: 1.3rem;
 }
 
 #browse--input {
   display: none;
+}
+
+span {
+  float: left;
+  color: #fff;
 }
 
 .file--browse {
